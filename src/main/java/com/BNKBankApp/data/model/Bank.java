@@ -14,4 +14,5 @@ public class Bank {
     private String bankName;
     @NotBlank @NotEmpty(message="This field is required")
     private String swiftCode;
+
 }
