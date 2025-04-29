@@ -21,15 +21,16 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
-    public void transfer(String fromAccountNumber,String toAccountNumber, double amount) {
+    public void transfer(String fromAccountNumber,String toAccountNumber, double amount,String senderTransactionPin) {
         Account from = accountRepository.findByAccountNumber(fromAccountNumber);
         Account to = accountRepository.findByAccountNumber(toAccountNumber);
-        from.setBalance(from.getBalance()-amount);
-        System.out.println(from.getBalance());
-        to.setBalance(to.getBalance()+amount);
-        System.out.println(to.getBalance());
-        accountRepository.save(from);
-        accountRepository.save(to);
+        if(senderTransactionPin.equals(from.getTransactionPin())) {
+            from.setBalance(from.getBalance()-amount);
+            to.setBalance(to.getBalance()+amount);
+            accountRepository.save(from);
+            accountRepository.save(to);
+        }
+
     }
 
 }
