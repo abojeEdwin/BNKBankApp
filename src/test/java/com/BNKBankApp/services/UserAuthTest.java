@@ -17,22 +17,22 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @SpringBootTest
-class UserServiceTest {
+class UserAuthTest {
 
     @Autowired
-    private UserService userService;
+    private UserAuth userAuth;
 
     @Autowired
     private AccountService accountService;
 
     @BeforeEach
     void setUp() {
-        userService.deleteAll();
+        userAuth.deleteAll();
     }
 
     @AfterEach
     void tearDown() {
-        userService.deleteAll();
+        userAuth.deleteAll();
     }
 
     @Test
@@ -43,8 +43,8 @@ class UserServiceTest {
         user.setPassword("password");
         user.setEmail("abojeedwin@gmail.com");
         user.setUsername("User name");
-        userService.register(user);
-        assertEquals(1,userService.count());
+        userAuth.register(user);
+        assertEquals(1,userAuth.count());
     }
 
     @Test
@@ -55,7 +55,7 @@ class UserServiceTest {
         user.setPassword("password");
         user.setEmail("abojeedwin@gmail.com");
         user.setUsername("User name");
-        userService.register(user);
+        userAuth.register(user);
 
         User user1 = new User();
         user1.setFullName("Full name");
@@ -63,7 +63,7 @@ class UserServiceTest {
         user1.setPassword("password");
         user1.setEmail("abojeedwin@gmail.com");
         user1.setUsername("User name");
-        assertThrows(DuplicateEmailException.class,()->userService.register(user1));
+        assertThrows(DuplicateEmailException.class,()->userAuth.register(user1));
     }
 
     @Test
@@ -74,7 +74,7 @@ class UserServiceTest {
         user.setPassword("password");
         user.setEmail("abojeedwin@gmail.com");
         user.setUsername("User name");
-        userService.register(user);
+        userAuth.register(user);
 
         User user1 = new User();
         user1.setFullName("Full name");
@@ -82,7 +82,7 @@ class UserServiceTest {
         user1.setPassword("password");
         user1.setEmail("abojeedwin123@gmail.com");
         user1.setUsername("User name");
-        assertThrows(DuplicateUserNameException.class,()->userService.register(user1));
+        assertThrows(DuplicateUserNameException.class,()->userAuth.register(user1));
     }
 
     @Test
@@ -93,7 +93,7 @@ class UserServiceTest {
         user.setPassword("password");
         user.setEmail("abojeedwingmail.com");
         user.setUsername("User name");
-        assertThrows(InvalidEmailException.class,()->userService.register(user));
+        assertThrows(InvalidEmailException.class,()->userAuth.register(user));
     }
 
     @Test
@@ -104,14 +104,14 @@ class UserServiceTest {
         user.setPassword("password");
         user.setEmail("abojeedwin@gmail.com");
         user.setUsername("User name");
-        userService.register(user);
-        assertEquals(1,userService.count());
+        userAuth.register(user);
+        assertEquals(1,userAuth.count());
 
         UserLoginRequest loginRequest = new UserLoginRequest();
         loginRequest.setEmail("abojeedwin@gmail.com");
         loginRequest.setPassword("password");
-        UserLoginResponse loginUser = userService.login(loginRequest);
-        assertEquals(1,userService.count());
+        UserLoginResponse loginUser = userAuth.login(loginRequest);
+        assertEquals(1,userAuth.count());
         assertEquals(loginUser.getUsername(),"User name");
     }
 
@@ -123,13 +123,13 @@ class UserServiceTest {
         user.setPassword("password");
         user.setEmail("abojeedwin@gmail.com");
         user.setUsername("User name");
-        userService.register(user);
-        assertEquals(1,userService.count());
+        userAuth.register(user);
+        assertEquals(1,userAuth.count());
 
         UserLoginRequest loginRequest = new UserLoginRequest();
         loginRequest.setEmail("abojeedwin@gmail.com");
         loginRequest.setPassword("pasword");
-        assertThrows(InvalidEmailException.class,()->userService.login(loginRequest));
+        assertThrows(InvalidEmailException.class,()->userAuth.login(loginRequest));
     }
 
     @Test
@@ -140,14 +140,14 @@ class UserServiceTest {
         user.setPassword("password");
         user.setEmail("abojeedwin@gmail.com");
         user.setUsername("User name");
-        userService.register(user);
-        assertEquals(1,userService.count());
+        userAuth.register(user);
+        assertEquals(1,userAuth.count());
 
         UserLoginRequest loginRequest = new UserLoginRequest();
         loginRequest.setEmail("abojeed@gmail.com");
         loginRequest.setPassword("password");
-        assertThrows(UserNotFoundException.class,()->userService.login(loginRequest));
-
-
+        assertThrows(UserNotFoundException.class,()->userAuth.login(loginRequest));
     }
+
+
 }

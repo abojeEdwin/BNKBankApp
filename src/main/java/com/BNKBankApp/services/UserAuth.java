@@ -9,13 +9,11 @@ import com.BNKBankApp.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
 import java.util.regex.Pattern;
 
 
 @Service
-public class UserService {
+public class UserAuth {
 
     @Autowired
     private UserRepository userRepository;

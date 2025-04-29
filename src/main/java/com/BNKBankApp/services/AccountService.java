@@ -30,6 +30,6 @@ public class AccountService {
         System.out.println(to.getBalance());
         accountRepository.save(from);
         accountRepository.save(to);
-
     }
+
 }
