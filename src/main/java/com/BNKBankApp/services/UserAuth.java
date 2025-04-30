@@ -36,7 +36,6 @@ public class UserAuth {
         String hashedPassword = hashPassword(user.getPassword());
         user.setPassword(hashedPassword);
         User savedUser = userRepository.save(user);
-        String token = jwtService.generateToken(user.getUsername());
         return new UserRegisterResponse(savedUser.getId(),savedUser.getEmail(),savedUser.getFullName(),savedUser.getPhone());
     }
 
@@ -58,7 +57,7 @@ public class UserAuth {
     public UserLoginResponse login(UserLoginRequest loginRequest) {
         User user = userRepository.findByEmail(loginRequest.getEmail());
         if(user == null) {throw new UserNotFoundException("Invalid password");}
-        if(!verifyPassword(user.getPassword(), loginRequest.getPassword())) {throw new InvalidEmailException("Incorrect email, please enter a valid email");}
+        if(!verifyPassword(user.getPassword(), loginRequest.getPassword())) {throw new InvalidEmailException("Incorrect password, please enter a valid password");}
         String token = jwtService.generateToken(user.getUsername());
         return new UserLoginResponse(token,user.getId(),user.getUsername());
     }
