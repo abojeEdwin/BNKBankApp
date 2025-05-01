@@ -18,6 +18,9 @@ class BankServiceTest {
     @Autowired
     private BankService bankService;
 
+    @Autowired
+    private GenerateAccountNumberService generateAccountNumberService;
+
     @BeforeEach
     void setUp(){
         bankRepository.deleteAll();
@@ -35,7 +38,6 @@ class BankServiceTest {
         bank.setBankName("Union UTC Bank");
         bank.setSwiftCode("UNI04BN");
         Account account = new Account();
-        account.setAccountNumber("12345");
         account.setBalance(100.0);
         account.setTransactionPin("0000");
         bankService.createAccount(bank,account);

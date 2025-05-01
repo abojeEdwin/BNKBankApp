@@ -1,5 +1,6 @@
 package com.BNKBankApp.data.repository;
 import com.BNKBankApp.data.model.Account;
+import com.BNKBankApp.data.model.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,15 +15,15 @@ class AccountRepositoryTest {
     private AccountRepository accountRepository;
 
 
-    @BeforeEach
-    void setUp() {
-        accountRepository.deleteAll();
-    }
-
-    @AfterEach
-    void tearDown() {
-        accountRepository.deleteAll();
-    }
+//    @BeforeEach
+//    void setUp() {
+//        accountRepository.deleteAll();
+//    }
+//
+//    @AfterEach
+//    void tearDown() {
+//        accountRepository.deleteAll();
+//    }
 
     @Test
     public void saveAccountTest() {

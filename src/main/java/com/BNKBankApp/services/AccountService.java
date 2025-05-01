@@ -24,13 +24,10 @@ public class AccountService {
     public void transfer(String fromAccountNumber,String toAccountNumber, double amount,String senderTransactionPin) {
         Account from = accountRepository.findByAccountNumber(fromAccountNumber);
         Account to = accountRepository.findByAccountNumber(toAccountNumber);
-        if(senderTransactionPin.equals(from.getTransactionPin())) {
-            from.setBalance(from.getBalance()-amount);
-            to.setBalance(to.getBalance()+amount);
-            accountRepository.save(from);
-            accountRepository.save(to);
-        }
-
+        from.setBalance(from.getBalance()-amount);
+        to.setBalance(to.getBalance()+amount);
+        accountRepository.save(from);
+        accountRepository.save(to);
     }
 
 }
