@@ -50,14 +50,13 @@ class AccountServiceTest {
         bankService.createAccount(bank, account2);
 
         assertEquals(account1.getBalance(), account2.getBalance());
-
     }
 
     @Test
     public void transferTest2(){
-        accountService.transfer("5566290782", "0537763218", 500,"1234");
-        assertEquals(1000, accountRepository.findByAccountNumber("0537763218").getBalance());
-        assert accountRepository.findByAccountNumber("5566290782").getBalance() == 0.0;
+        accountService.transfer("0480111800", "8757378735", 500,"1234");
+        assertEquals(1000, accountRepository.findByAccountNumber("8757378735").getBalance());
+        assert accountRepository.findByAccountNumber("0480111800").getBalance() == 0.0;
     }
 
 }

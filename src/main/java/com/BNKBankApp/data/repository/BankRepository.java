@@ -5,7 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BankRepository extends MongoRepository<Bank, String> {
-
     Bank findByBankName(String name);
-
 }

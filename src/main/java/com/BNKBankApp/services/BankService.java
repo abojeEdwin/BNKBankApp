@@ -31,7 +31,6 @@ public class BankService {
         accountRepository.save(account);
     }
 
-
     public static String hashPassword(String password){
         return passwordEncoder.encode(password);
     }
