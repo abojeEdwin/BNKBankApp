@@ -24,6 +24,9 @@ public class UserAuth {
     @Autowired
     JwtService jwtService;
 
+    @Autowired
+    OtpService otpService;
+
     private static String EMAIL_REGEX =
             "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 
@@ -58,6 +61,8 @@ public class UserAuth {
         User user = userRepository.findByEmail(loginRequest.getEmail());
         if(user == null) {throw new UserNotFoundException("Invalid password");}
         if(!verifyPassword(user.getPassword(), loginRequest.getPassword())) {throw new InvalidEmailException("Incorrect password, please enter a valid password");}
+        otpService.sendOTPEmail(user.getEmail(),"Login");
+        verifyOTPAndGenerateToken(user.getEmail(),loginRequest.getOtp());
         String token = jwtService.generateToken(user.getUsername());
         return new UserLoginResponse(token,user.getId(),user.getUsername());
     }
@@ -66,16 +71,15 @@ public class UserAuth {
         return passwordEncoder.encode(password);
     }
 
-    public static boolean verifyPassword(String hashedPassword, String inputPassword) {
-        if (hashedPassword == null || hashedPassword.isEmpty() ||
-                inputPassword == null || inputPassword.isEmpty()) {
-            return false;
-        }
 
-        try {
-            return passwordEncoder.matches(inputPassword, hashedPassword);
-        } catch (IllegalArgumentException e) {
-            return false;
+    public static boolean verifyPassword(String hashedPassword, String inputPassword) {
+        if (hashedPassword == null || hashedPassword.isEmpty() || inputPassword == null || inputPassword.isEmpty()) {return false;}
+        try {return passwordEncoder.matches(inputPassword, hashedPassword);} catch (IllegalArgumentException e) {return false;}}
+
+    public String verifyOTPAndGenerateToken(String email, String otp) {
+        if (otpService.validateOTP(email, "login", otp)) {
+            return jwtService.generateToken(email);
         }
+        throw new SecurityException("Invalid OTP");
     }
 }
