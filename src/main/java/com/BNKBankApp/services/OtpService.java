@@ -15,6 +15,9 @@ public class OtpService {
     @Autowired
     private JavaMailSender mailSender;
 
+    @Autowired
+    JwtService jwtService;
+
     @Value("${app.email.from}")
     private String fromEmail;
 
@@ -43,6 +46,13 @@ public class OtpService {
             return true;
         }
         return false;
+    }
+
+    public String verifyOTPAndGenerateToken(String email, String otp) {
+        if (validateOTP(email, "login", otp)) {
+            return jwtService.generateToken(email);
+        }
+        throw new SecurityException("Invalid OTP");
     }
 
 

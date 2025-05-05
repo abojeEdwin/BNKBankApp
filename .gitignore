@@ -37,8 +37,8 @@ build/
 ### Mac OS ###
 .DS_Store
 
-pom.xml
+/pom.xml/
 application./
-resources./
+/resources./
 .gitignore
 resources
