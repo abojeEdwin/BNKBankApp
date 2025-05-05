@@ -23,15 +23,15 @@ class AccountServiceTest {
     @Autowired
     BankService bankService;
 
-//    @BeforeEach
-//    void setUp() {
-//        accountService.deleteAll();
-//    }
-//
-//    @AfterEach
-//    void tearDown() {
-//        accountService.deleteAll();
-//    }
+    @BeforeEach
+    void setUp() {
+       accountService.deleteAll();
+    }
+
+    @AfterEach
+    void tearDown() {
+        accountService.deleteAll();
+    }
 
     @Test
     public void transferTest(){
@@ -54,9 +54,10 @@ class AccountServiceTest {
 
     @Test
     public void transferTest2(){
-        accountService.transfer("0480111800", "8757378735", 500,"1234");
-        assertEquals(1000, accountRepository.findByAccountNumber("8757378735").getBalance());
-        assert accountRepository.findByAccountNumber("0480111800").getBalance() == 0.0;
+        accountService.transfer("8757378735", "0480111800", 200,"5678");
+        assertEquals(200, accountRepository.findByAccountNumber("0480111800").getBalance());
+        assert accountRepository.findByAccountNumber("8757378735").getBalance() == 800.0;
+
     }
 
 }
