@@ -40,3 +40,5 @@ build/
 pom.xml
 application./
 resources./
+.gitignore
+resources
