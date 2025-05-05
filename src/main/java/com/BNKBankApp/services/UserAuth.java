@@ -61,7 +61,6 @@ public class UserAuth {
         User user = userRepository.findByEmail(loginRequest.getEmail());
         if(user == null) {throw new UserNotFoundException("Invalid password");}
         if(!verifyPassword(user.getPassword(), loginRequest.getPassword())) {throw new InvalidEmailException("Incorrect password, please enter a valid password");}
-        otpService.sendOTPEmail(user.getEmail(),"Login");
         verifyOTPAndGenerateToken(user.getEmail(),loginRequest.getOtp());
         String token = jwtService.generateToken(user.getUsername());
         return new UserLoginResponse(token,user.getId(),user.getUsername());
