@@ -53,8 +53,8 @@ public class UserAuth {
 
     public UserLoginResponse login(UserLoginRequest loginRequest) {
         User user = userRepository.findByEmail(loginRequest.getEmail());
-        if(user == null) {throw new UserNotFoundException("Invalid password");}
-        if(!hashingPassword.verifyPassword(user.getPassword(), loginRequest.getPassword())) {throw new InvalidEmailException("Incorrect password, please enter a valid password");}
+        if(user == null) {throw new UserNotFoundException("User not found");}
+        if(!hashingPassword.verifyPassword(user.getPassword(), loginRequest.getPassword())) {throw new InvalidPasswordException("Incorrect password, please enter a valid password");}
         otpService.verifyOTPAndGenerateToken(user.getEmail(),loginRequest.getOtp());
         String token = jwtService.generateToken(user.getUsername());
         return new UserLoginResponse(token,user.getId(),user.getUsername());
