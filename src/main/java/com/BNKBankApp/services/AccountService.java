@@ -1,7 +1,9 @@
 package com.BNKBankApp.services;
 import com.BNKBankApp.data.model.Account;
+import com.BNKBankApp.data.model.CardDetails;
 import com.BNKBankApp.data.model.Transaction;
 import com.BNKBankApp.data.repository.AccountRepository;
+import com.BNKBankApp.data.repository.CardDetailsRepository;
 import com.BNKBankApp.data.repository.TransactionRepository;
 import com.BNKBankApp.exceptions.InvalidBalanceException;
 import com.BNKBankApp.exceptions.InvalidTransactionPin;
@@ -23,6 +25,9 @@ public class AccountService {
     @Autowired
     private TransactionRepository transactionRepository;
 
+    @Autowired
+    private CardDetailsRepository cardDetailsRepository;
+
     private static BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public void deleteAll() {
@@ -32,6 +37,8 @@ public class AccountService {
     public Account saveAccount(Account account) {
         return accountRepository.save(account);
     }
+
+    public CardDetailsResponse saveCardDetails(CardDetails cardDetails){ return cardDetailsRepository.save(cardDetails);}
 
     public void transfer(String fromAccountNumber,String toAccountNumber, double amount,String senderTransactionPin) {
 

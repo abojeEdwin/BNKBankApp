@@ -17,6 +17,8 @@ public class Account {
     @NotBlank @NotBlank(message = "This field is required")
     private String accountNumber;
     @NotNull(message="This field cannot be empty")
+    @NotNull
+    private CardDetails cardDetails;
     private String transactionPin;
     @NotBlank
     @NotNull(message="This field cannot be empty")

@@ -31,8 +31,6 @@ public class UserAuth {
     VerifyEmail verifyEmail;
 
 
-
-
     public UserRegisterResponse register(User user) {
         if(userRepository.existsByEmail(user.getEmail())) {throw new DuplicateEmailException("Email already exist");}
         if(userRepository.existsByUsername(user.getUsername())) {throw new DuplicateUserNameException("Username already exist");}

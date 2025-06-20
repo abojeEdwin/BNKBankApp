@@ -41,20 +41,8 @@ public class OtpService {
     public boolean validateOTP(String email, String purpose, String otp) {
         String key = email + ":" + purpose;
         String storedOtp = otpStorage.get(key);
-        if (storedOtp != null && storedOtp.equals(otp)) {
-            otpStorage.remove(key);
-            return true;
-        }
-        return false;
-    }
+        if (storedOtp != null && storedOtp.equals(otp)) {otpStorage.remove(key);return true;}return false;}
 
     public String verifyOTPAndGenerateToken(String email, String otp) {
-        if (validateOTP(email, "login", otp)) {
-            return jwtService.generateToken(email);
-        }
-        throw new SecurityException("Invalid OTP");
-    }
-
-
-
+        if (validateOTP(email, "login", otp)) {return jwtService.generateToken(email);}throw new SecurityException("Invalid OTP");}
 }

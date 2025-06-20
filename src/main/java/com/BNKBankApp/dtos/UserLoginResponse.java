@@ -1,12 +1,10 @@
 package com.BNKBankApp.dtos;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
+@Setter
 public class UserLoginResponse {
+
     private String token;
     private String id;
     private String username;
