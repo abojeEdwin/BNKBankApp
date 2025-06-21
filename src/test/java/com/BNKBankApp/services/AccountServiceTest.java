@@ -1,7 +1,11 @@
 package com.BNKBankApp.services;
 import com.BNKBankApp.data.model.Account;
 import com.BNKBankApp.data.model.Bank;
+import com.BNKBankApp.data.model.CardType;
 import com.BNKBankApp.data.repository.AccountRepository;
+import com.BNKBankApp.data.repository.BankRepository;
+import com.BNKBankApp.data.repository.CardDetailsRepository;
+import com.BNKBankApp.dtos.CardDetailsResponse;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,19 +23,27 @@ class AccountServiceTest {
 
     @Autowired
     AccountRepository accountRepository;
+    @Autowired
+    CardDetailsRepository cardDetailsRepository;
+    @Autowired
+    BankRepository bankRepository;
 
     @Autowired
     BankService bankService;
 
-    @BeforeEach
-    void setUp() {
-       accountService.deleteAll();
-    }
-
-    @AfterEach
-    void tearDown() {
-        accountService.deleteAll();
-    }
+//    @BeforeEach
+//    void setUp() {
+//       accountService.deleteAll();
+//       cardDetailsRepository.deleteAll();
+//       bankRepository.deleteAll();
+//    }
+//
+//    @AfterEach
+//    void tearDown() {
+//        accountService.deleteAll();
+//        cardDetailsRepository.deleteAll();
+//        bankRepository.deleteAll();
+//    }
 
     @Test
     public void transferTest(){
@@ -57,6 +69,13 @@ class AccountServiceTest {
         accountService.transfer("8757378735", "0480111800", 200,"5678");
         assertEquals(200, accountRepository.findByAccountNumber("0480111800").getBalance());
         assert accountRepository.findByAccountNumber("8757378735").getBalance() == 800.0;
+
+    }
+    @Test
+    public void findAccountByCardNumberTest(){
+
+//        CardDetailsResponse response = bankService.createCard("6912957462", CardType.VERVE);
+        assertEquals("6912957462",accountService.findAccountByCardNumber("1986060720525362").getAccountNumber());
 
     }
 

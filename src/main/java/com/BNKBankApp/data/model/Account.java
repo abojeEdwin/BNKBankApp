@@ -20,7 +20,7 @@ public class Account {
     private String accountNumber;
 
     @NotNull(message = "This field cannot be empty")
-    private CardDetails cardDetails;
+    private String cardDetailsId;
 
     @NotNull(message = "This field cannot be empty")
     private String transactionPin;

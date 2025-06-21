@@ -22,8 +22,6 @@ public class UserAuthController {
     @Autowired
     OtpService otpService;
 
-
-
     @PostMapping("/register")
     public ResponseEntity<UserRegisterResponse> register(@Valid @RequestBody User user){
         UserRegisterResponse savedUser = userAuth.register(user);

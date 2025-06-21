@@ -7,6 +7,7 @@ import com.BNKBankApp.data.repository.AccountRepository;
 import com.BNKBankApp.data.repository.BankRepository;
 import com.BNKBankApp.data.repository.CardDetailsRepository;
 import com.BNKBankApp.dtos.CardDetailsResponse;
+import com.BNKBankApp.exceptions.AccountNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -40,17 +41,25 @@ public class BankService {
         accountRepository.save(account);
     }
 
-    public void createCard(String accountNumber,CardType cardType) {
+    public CardDetailsResponse createCard(String accountNumber,CardType cardType) {
+        Account account = accountRepository.findByAccountNumber(accountNumber);
+        if(account == null) {
+            throw new AccountNotFoundException("Account not found");
+        }
+        String message = "Successfully created card";
         CardDetails cardDetails = new CardDetails();
         cardDetails.setCardNumber(GenerateCardNumber.generateAccountNumber());
         cardDetails.setCardType(CardType.MASTERCARD);
         cardDetails.setCvv(GenerateCardNumber.generateAccountCvv());
         cardDetails.setExpiryDate(LocalDate.EPOCH.plusYears(5));
-        cardDetailsRepository.save(cardDetails);
+        cardDetails.setAccount(account);
+        CardDetails savedCard = cardDetailsRepository.save(cardDetails);
 
-        Account account = accountRepository.findByAccountNumber(accountNumber);
-        account.setCardDetails(cardDetails);
+        account.setCardDetailsId(savedCard.getId());
         accountRepository.save(account);
+
+        return new CardDetailsResponse(savedCard.getId(),savedCard.getCardNumber(),message);
+
     }
 
 

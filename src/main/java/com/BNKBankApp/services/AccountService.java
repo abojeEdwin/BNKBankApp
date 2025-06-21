@@ -6,14 +6,15 @@ import com.BNKBankApp.data.repository.AccountRepository;
 import com.BNKBankApp.data.repository.CardDetailsRepository;
 import com.BNKBankApp.data.repository.TransactionRepository;
 import com.BNKBankApp.dtos.CardDetailsResponse;
+import com.BNKBankApp.exceptions.AccountNotFoundException;
+import com.BNKBankApp.exceptions.CreditCardNotFoundException;
 import com.BNKBankApp.exceptions.InvalidBalanceException;
 import com.BNKBankApp.exceptions.InvalidTransactionPin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.time.Instant;
-
-
+import java.util.Optional;
 
 
 @Service
@@ -39,7 +40,14 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
-    public CardDetailsResponse saveCardDetails(CardDetails cardDetails){String message = "Success"; cardDetailsRepository.save(cardDetails); return new CardDetailsResponse(cardDetails.getId(), cardDetails.getCardNumber(),message);}
+    public CardDetailsResponse saveCardDetails(CardDetails cardDetails){
+        String message = "Success"; cardDetailsRepository.save(cardDetails);
+        return new CardDetailsResponse(cardDetails.getId(), cardDetails.getCardNumber(),message);}
+
+    public Account findAccountByCardNumber(String cardNumber){
+        return cardDetailsRepository.findByCardNumber(cardNumber).map(CardDetails::getAccount)
+                .orElseThrow(() -> new AccountNotFoundException(cardNumber));
+    }
 
     public void transfer(String fromAccountNumber,String toAccountNumber, double amount,String senderTransactionPin) {
 
