@@ -5,6 +5,7 @@ import com.BNKBankApp.data.model.Transaction;
 import com.BNKBankApp.data.repository.AccountRepository;
 import com.BNKBankApp.data.repository.CardDetailsRepository;
 import com.BNKBankApp.data.repository.TransactionRepository;
+import com.BNKBankApp.dtos.CardDetailsResponse;
 import com.BNKBankApp.exceptions.InvalidBalanceException;
 import com.BNKBankApp.exceptions.InvalidTransactionPin;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
-    public CardDetailsResponse saveCardDetails(CardDetails cardDetails){ return cardDetailsRepository.save(cardDetails);}
+    public CardDetailsResponse saveCardDetails(CardDetails cardDetails){String message = "Success"; cardDetailsRepository.save(cardDetails); return new CardDetailsResponse(cardDetails.getId(), cardDetails.getCardNumber(),message);}
 
     public void transfer(String fromAccountNumber,String toAccountNumber, double amount,String senderTransactionPin) {
 

@@ -3,6 +3,8 @@ import lombok.*;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserLoginResponse {
 
     private String token;

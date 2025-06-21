@@ -12,15 +12,19 @@ public class Account {
 
     @Id
     private String id;
-    @NotBlank
+
+    @NotNull(message = "This field cannot be empty")
     private double balance;
-    @NotBlank @NotBlank(message = "This field is required")
+
+    @NotNull(message = "This field cannot be empty")
     private String accountNumber;
-    @NotNull(message="This field cannot be empty")
-    @NotNull
+
+    @NotNull(message = "This field cannot be empty")
     private CardDetails cardDetails;
+
+    @NotNull(message = "This field cannot be empty")
     private String transactionPin;
-    @NotBlank
+
     @NotNull(message="This field cannot be empty")
     @DBRef
     private String userId;
